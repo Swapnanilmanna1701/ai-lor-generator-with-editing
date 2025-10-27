@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Save, Loader2, Bold, Italic, List, ListOrdered } from "lucide-react";
+import { Download, Save, Loader2, Bold, Italic, List, ListOrdered, Copy, Check } from "lucide-react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
+import { toast } from "sonner";
 
 interface LORPreviewProps {
   content: string;
@@ -25,6 +26,7 @@ export default function LORPreview({
   exporting = false,
 }: LORPreviewProps) {
   const [hasChanges, setHasChanges] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -59,6 +61,24 @@ export default function LORPreview({
     }
   };
 
+  const handleCopy = async () => {
+    if (!editor) return;
+    
+    try {
+      // Get plain text from editor
+      const text = editor.getText();
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      toast.success("Letter copied to clipboard!");
+      
+      // Reset copied state after 2 seconds
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error("Copy error:", error);
+      toast.error("Failed to copy to clipboard");
+    }
+  };
+
   if (!content) {
     return (
       <div className="h-full flex items-center justify-center text-muted-foreground">
@@ -76,6 +96,24 @@ export default function LORPreview({
         <h3 className="text-lg font-semibold">Generated Letter</h3>
         <div className="flex items-center gap-2">
           <Button
+            onClick={handleCopy}
+            size="sm"
+            variant="outline"
+            className="gap-2"
+          >
+            {copied ? (
+              <>
+                <Check className="h-4 w-4" />
+                Copied!
+              </>
+            ) : (
+              <>
+                <Copy className="h-4 w-4" />
+                Copy
+              </>
+            )}
+          </Button>
+          <Button
             onClick={handleSave}
             disabled={!hasChanges || saving}
             size="sm"
@@ -89,7 +127,7 @@ export default function LORPreview({
             ) : (
               <>
                 <Save className="mr-2 h-4 w-4" />
-                Save Changes
+                Save
               </>
             )}
           </Button>
