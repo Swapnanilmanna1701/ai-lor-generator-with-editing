@@ -572,18 +572,14 @@ bun update
 
 ---
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 👨‍💻 Author
 
 **Swapnanil Manna**
 
-- GitHub: [@swapnanil](https://github.com/swapnanil)
-- Email: swapnanil@example.com
+- GitHub: [@swapnanil](https://github.com/Swapnanilmanna1701)
+- Email: swapnanilmanna06694@gmail.com
 
 ---
 
@@ -630,7 +626,7 @@ bun drizzle-kit push
 
 For issues, questions, or contributions:
 
-1. Open an issue on [GitHub Issues](https://github.com/yourusername/orbit-ai-lor-generator/issues)
+1. Open an issue on [GitHub Issues](https://github.com/Swapnanilmanna1701/orbit-ai-lor-generator/issues)
 2. Contact the author directly
 3. Check documentation at `/docs`
 
