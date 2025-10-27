@@ -2,11 +2,11 @@
 
 <div align="center">
 
-![Orbit AI Logo](https://img.shields.io/badge/Orbit_AI-LOR_Generator-6366f1?style=for-the-badge)
+
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
-![Bun](https://img.shields.io/badge/Bun-Runtime-f472b6?style=for-the-badge&logo=bun)
-
+![Bun](https://img.shields.io/badge/Bun-f472b6?style=for-the-badge&logo=bun)
+![Postgresql](https://img.shields.io/badge/Postgresql-f472b6?style=for-the-badge&logo=postgresql)
 **An AI-powered Letter of Recommendation generator designed for elite institution applications**
 
 [Features](#-features) • [Installation](#-installation) • [Tech Stack](#-tech-stack) • [Structure](#-project-structure) • [Usage](#-usage)
