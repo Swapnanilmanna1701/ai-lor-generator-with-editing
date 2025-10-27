@@ -95,7 +95,7 @@ Orbit AI's LOR Generator Suite is a comprehensive web application that leverages
 | **Gemini 2.5 Flash** | AI model for LOR generation | API |
 | **React 19** | UI library (fully compatible) | 19.x |
 | **Tailwind CSS** | Utility-first styling | 3.x |
-| **Prisma** | Database ORM | Latest |
+| **Drizzle ORM** | Database ORM | Latest |
 | **PostgreSQL/MySQL** | Relational database | - |
 
 ---
@@ -103,65 +103,83 @@ Orbit AI's LOR Generator Suite is a comprehensive web application that leverages
 ## 📁 Project Structure
 ```
 orbit-ai-lor-generator/
-├── app/                          # Next.js 15 App Router
-│   ├── (auth)/                   # Auth route group
-│   │   ├── login/
-│   │   │   └── page.tsx          # Login page
-│   │   └── signup/
-│   │       └── page.tsx          # Signup page
-│   ├── (protected)/              # Protected routes group
-│   │   ├── dashboard/
-│   │   │   └── page.tsx          # Dashboard page
-│   │   └── generator/
-│   │       └── page.tsx          # LOR generator page
-│   ├── api/                      # API routes
-│   │   ├── auth/                 # Auth endpoints
-│   │   ├── generate-lor/         # LOR generation endpoint
-│   │   ├── letters/              # CRUD operations
-│   │   └── export/               # PDF/DOCX export
-│   ├── layout.tsx                # Root layout
-│   ├── page.tsx                  # Landing page
-│   └── globals.css               # Global styles
-├── components/                   # React components
-│   ├── ui/                       # Reusable UI components
-│   │   ├── button.tsx
-│   │   ├── input.tsx
-│   │   ├── textarea.tsx
-│   │   └── ...
-│   ├── auth/                     # Auth components
-│   │   ├── LoginForm.tsx
-│   │   └── SignupForm.tsx
-│   ├── generator/                # Generator components
-│   │   ├── LORForm.tsx
-│   │   ├── RichTextEditor.tsx
-│   │   └── PreviewPanel.tsx
-│   ├── dashboard/                # Dashboard components
-│   │   ├── LetterCard.tsx
-│   │   └── LetterList.tsx
-│   └── shared/                   # Shared components
-│       ├── Navbar.tsx
-│       └── Footer.tsx
-├── lib/                          # Utility functions
-│   ├── auth.ts                   # Better-auth configuration
-│   ├── db.ts                     # Database connection
-│   ├── gemini.ts                 # Gemini API setup
-│   ├── utils.ts                  # Helper functions
-│   └── validations.ts            # Zod schemas
-├── prisma/                       # Prisma ORM
-│   ├── schema.prisma             # Database schema
-│   └── migrations/               # Database migrations
+├── drizzle/                      # Drizzle ORM
+│   ├── meta/                     # Migration metadata
+│   │   ├── 0000_true_dreadnoughts.sql
+│   │   └── 0001_freezing_daimon_hellstrom.sql
+│   └── public/                   # Public migration files
 ├── public/                       # Static assets
-│   ├── images/
-│   └── fonts/
-├── types/                        # TypeScript types
-│   └── index.ts                  # Global type definitions
-├── .env.local                    # Environment variables
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── src/                          # Source code
+│   ├── app/                      # Next.js 15 App Router
+│   │   ├── api/                  # API routes
+│   │   │   ├── auth/             # Better-auth endpoints
+│   │   │   │   └── [...all]/
+│   │   │   │       └── route.ts  # Better-auth handler
+│   │   │   ├── generate-lor/
+│   │   │   │   └── route.ts      # LOR generation endpoint
+│   │   │   ├── letters/
+│   │   │   │   ├── route.ts      # Get all letters
+│   │   │   │   └── [id]/
+│   │   │   │       └── route.ts  # CRUD operations
+│   │   │   └── export/
+│   │   │       ├── pdf/
+│   │   │       │   └── route.ts  # PDF export
+│   │   │       └── docx/
+│   │   │           └── route.ts  # DOCX export
+│   │   ├── dashboard/            # Dashboard route
+│   │   │   └── page.tsx          # Dashboard page
+│   │   ├── generator/            # Generator route
+│   │   │   └── page.tsx          # LOR generator page
+│   │   ├── login/                # Login route
+│   │   │   └── page.tsx          # Login page
+│   │   ├── signup/               # Signup route
+│   │   │   └── page.tsx          # Signup page
+│   │   ├── favicon.ico           # App favicon
+│   │   ├── global-error.tsx      # Global error handler
+│   │   ├── globals.css           # Global styles
+│   │   ├── layout.tsx            # Root layout
+│   │   └── page.tsx              # Landing page
+│   ├── components/               # React components
+│   │   ├── ui/                   # UI components (shadcn/ui)
+│   │   │   ├── button.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── textarea.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── dialog.tsx
+│   │   │   └── ...
+│   │   ├── ErrorReporter.tsx     # Error reporting component
+│   │   ├── LORForm.tsx           # LOR generation form
+│   │   └── LORPreview.tsx        # Letter preview component
+│   ├── db/                       # Database configuration
+│   │   ├── index.ts              # Database connection & client
+│   │   └── schema.ts             # Drizzle schema definitions
+│   ├── hooks/                    # Custom React hooks
+│   │   └── use-mobile.ts         # Mobile detection hook
+│   └── lib/                      # Utility functions & configs
+│       ├── hooks/                # Additional hooks
+│       │   └── ...
+│       ├── auth-client.ts        # Auth client configuration
+│       ├── auth.ts               # Better-auth setup
+│       ├── export-utils.ts       # PDF/DOCX export utilities
+│       └── utils.ts              # Helper functions
+├── .env                          # Environment variables
 ├── .gitignore                    # Git ignore file
 ├── bun.lockb                     # Bun lock file
 ├── package.json                  # Dependencies
+├── package-lock.json             # NPM lock file (if needed)
 ├── tsconfig.json                 # TypeScript config
-├── tailwind.config.ts            # Tailwind config
-├── next.config.js                # Next.js config
+├── next.config.ts                # Next.js config
+├── next-env.d.ts                 # Next.js types
+├── drizzle.config.ts             # Drizzle ORM config
+├── components.json               # shadcn/ui config
+├── postcss.config.mjs            # PostCSS config
+├── eslint.config.mjs             # ESLint config
+├── middleware.ts                 # Next.js middleware (auth protection)
 └── README.md                     # This file
 ```
 
@@ -189,7 +207,7 @@ bun install
 
 ### Step 3: Environment Configuration
 
-Create a `.env.local` file in the root directory:
+Create a `.env` file in the root directory:
 ```env
 # Database
 DATABASE_URL="postgresql://user:password@localhost:5432/orbit_ai"
@@ -209,14 +227,14 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
 ### Step 4: Database Setup
 ```bash
-# Generate Prisma Client
-bun prisma generate
+# Generate Drizzle migrations
+bun drizzle-kit generate
 
-# Run database migrations
-bun prisma migrate dev --name init
+# Push schema to database
+bun drizzle-kit push
 
-# (Optional) Seed database with sample data
-bun prisma db seed
+# (Optional) Open Drizzle Studio to view database
+bun drizzle-kit studio
 ```
 
 ### Step 5: Run Development Server
@@ -250,17 +268,20 @@ bun start
 
 ### Database Management
 ```bash
-# Open Prisma Studio (Database GUI)
-bun prisma studio
+# Open Drizzle Studio (Database GUI)
+bun drizzle-kit studio
 
-# Create a new migration
-bun prisma migrate dev --name migration_name
+# Generate new migration
+bun drizzle-kit generate
 
-# Apply migrations to production
-bun prisma migrate deploy
+# Push schema changes to database
+bun drizzle-kit push
 
-# Reset database (⚠️ deletes all data)
-bun prisma migrate reset
+# Pull schema from database
+bun drizzle-kit pull
+
+# Drop database (⚠️ deletes all data)
+bun drizzle-kit drop
 ```
 
 ### Code Quality
@@ -299,14 +320,14 @@ Navigate to `/signup` and create an account with:
 
 ### 2. **Generate a Letter**
 1. Log in and navigate to `/generator`
-2. Fill out the comprehensive form:
+2. Fill out the comprehensive form (`LORForm.tsx`):
    - **Applicant Details:** Name, program, achievements
    - **Referrer Information:** Your position, relationship to applicant
    - **Letter Specifications:** Tone (formal/warm), type (academic/professional)
    - **Target Institution:** Specific program or university
 3. Click **"Generate LOR"**
-4. Review the AI-generated letter in the rich text editor
-5. Edit as needed using the toolbar controls
+4. Review the AI-generated letter in the preview panel (`LORPreview.tsx`)
+5. Edit as needed using the rich text editor
 6. Click **"Save Letter"** to store in your dashboard
 
 ### 3. **Manage Letters**
@@ -318,6 +339,107 @@ Navigate to `/signup` and create an account with:
 ### 4. **Export Options**
 - **PDF:** Professional format, ideal for printing or email
 - **DOCX:** Editable Word document for further customization
+
+---
+
+## 🔑 Key Configuration Files
+
+### `drizzle.config.ts`
+```typescript
+import type { Config } from "drizzle-kit";
+
+export default {
+  schema: "./src/db/schema.ts",
+  out: "./drizzle",
+  dialect: "postgresql", // or "mysql"
+  dbCredentials: {
+    url: process.env.DATABASE_URL!,
+  },
+} satisfies Config;
+```
+
+### `middleware.ts`
+```typescript
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export function middleware(request: NextRequest) {
+  // Protected routes logic
+  const protectedPaths = ["/dashboard", "/generator"];
+  const isProtectedPath = protectedPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
+
+  if (isProtectedPath) {
+    // Check authentication
+    const token = request.cookies.get("auth-token");
+    
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
+```
+
+### `src/db/schema.ts` (Example)
+```typescript
+import { pgTable, text, serial, timestamp, integer } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  email: text("email").notNull().unique(),
+  password: text("password").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const letters = pgTable("letters", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id),
+  content: text("content").notNull(),
+  applicantName: text("applicant_name"),
+  referrerName: text("referrer_name"),
+  tone: text("tone"),
+  letterType: text("letter_type"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+```
+
+### `src/lib/auth.ts` (Better-Auth Setup)
+```typescript
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "@/db";
+
+export const auth = betterAuth({
+  database: drizzleAdapter(db, {
+    provider: "pg", // or "mysql"
+  }),
+  emailAndPassword: {
+    enabled: true,
+  },
+  secret: process.env.BETTER_AUTH_SECRET!,
+  baseURL: process.env.BETTER_AUTH_URL!,
+});
+```
+
+### `src/lib/auth-client.ts` (Client-Side Auth)
+```typescript
+import { createAuthClient } from "better-auth/react";
+
+export const authClient = createAuthClient({
+  baseURL: process.env.NEXT_PUBLIC_APP_URL!,
+});
+
+export const { signIn, signUp, signOut, useSession } = authClient;
+```
 
 ---
 
@@ -344,11 +466,12 @@ Navigate to `/signup` and create an account with:
 
 ### Security Features
 
-- JWT-based session management
+- JWT-based session management with Better-Auth
 - Password hashing with bcrypt
 - Protected API routes with middleware
 - CSRF protection
 - Secure cookie handling
+- Route protection via `middleware.ts`
 
 ---
 
@@ -356,14 +479,14 @@ Navigate to `/signup` and create an account with:
 
 ### Modify AI Generation Prompt
 
-Edit `app/api/generate-lor/route.ts`:
+Edit `src/app/api/generate-lor/route.ts`:
 ```typescript
 const prompt = `Generate a Letter of Recommendation...`;
 ```
 
 ### Adjust Letter Length
 
-Modify token limits in `lib/gemini.ts`:
+Modify token limits in `src/lib/gemini.ts`:
 ```typescript
 maxOutputTokens: 4096, // Increase for longer letters
 ```
@@ -381,6 +504,39 @@ theme: {
 }
 ```
 
+### Add UI Components
+
+Use shadcn/ui to add new components:
+```bash
+bunx shadcn-ui@latest add button
+bunx shadcn-ui@latest add dialog
+bunx shadcn-ui@latest add card
+```
+
+---
+
+## 🧩 Key Components
+
+### `LORForm.tsx`
+Comprehensive form component for collecting:
+- Applicant information
+- Referrer details
+- Letter preferences
+- Target institution data
+
+### `LORPreview.tsx`
+Real-time preview component featuring:
+- Rich text editor integration
+- Live content updates
+- Professional formatting
+- Export options
+
+### `ErrorReporter.tsx`
+Global error handling component for:
+- Capturing runtime errors
+- User-friendly error messages
+- Error logging and reporting
+
 ---
 
 ## 🐛 Troubleshooting
@@ -394,11 +550,27 @@ const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 ### Issue: Database Connection Failed
 
-**Solution:** Check your `DATABASE_URL` in `.env.local` and ensure the database is running.
+**Solution:** Check your `DATABASE_URL` in `.env` and ensure the database is running.
 
 ### Issue: Authentication Not Working
 
 **Solution:** Verify `BETTER_AUTH_SECRET` is set and is at least 32 characters long.
+
+### Issue: Drizzle Migration Errors
+
+**Solution:** Reset and regenerate migrations:
+```bash
+bun drizzle-kit drop
+bun drizzle-kit generate
+bun drizzle-kit push
+```
+
+### Issue: Build Errors with Next.js 15
+
+**Solution:** Ensure all dependencies are compatible with React 19 and Next.js 15:
+```bash
+bun update
+```
 
 ---
 
@@ -422,7 +594,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Google Gemini** for providing the AI model
 - **Vercel** for Next.js framework
 - **Better-Auth** for authentication solution
+- **Drizzle ORM** for database management
 - **Bun** team for the fast runtime
+- **shadcn/ui** for beautiful UI components
 
 ---
 
@@ -440,10 +614,17 @@ vercel
 ### Environment Variables for Production
 
 Ensure all environment variables are set in your deployment platform:
-- `DATABASE_URL`
+- `TURSO_CONNECTION_URL`
+- `TURSO_AUTH_TOKEN`
 - `BETTER_AUTH_SECRET`
 - `GEMINI_API_KEY`
 - `NEXT_PUBLIC_APP_URL`
+
+### Database Migration in Production
+```bash
+# Push schema to production database
+bun drizzle-kit push
+```
 
 ---
 
@@ -454,6 +635,17 @@ For issues, questions, or contributions:
 1. Open an issue on [GitHub Issues](https://github.com/yourusername/orbit-ai-lor-generator/issues)
 2. Contact the author directly
 3. Check documentation at `/docs`
+
+---
+
+## 🔄 Recent Updates
+
+- ✅ Fully compatible with React 19 and Next.js 15
+- ✅ Updated to Gemini 2.5 Flash model
+- ✅ Enhanced letter generation (700-900 words)
+- ✅ Improved error handling with `ErrorReporter` component
+- ✅ Rich text editing with advanced toolbar
+- ✅ Professional PDF/DOCX export functionality
 
 ---
 
