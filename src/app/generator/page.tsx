@@ -208,7 +208,7 @@ export default function GeneratorPage() {
           {/* Right Column - Preview */}
           <div className="bg-white rounded-lg shadow-sm border p-6 lg:sticky lg:top-24 h-fit max-h-[calc(100vh-8rem)] overflow-hidden flex flex-col">
             <h3 className="text-xl font-semibold mb-6">Generated Letter</h3>
-            <div className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0 overflow-y-auto">
               <LORPreview
                 content={generatedContent}
                 onSave={handleSave}
