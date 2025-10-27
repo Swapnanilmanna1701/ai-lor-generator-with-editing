@@ -210,13 +210,11 @@ bun install
 Create a `.env` file in the root directory:
 ```env
 # Database
-DATABASE_URL="postgresql://user:password@localhost:5432/orbit_ai"
-# Or for MySQL:
-# DATABASE_URL="mysql://user:password@localhost:3306/orbit_ai"
+TURSO_CONNECTION_URL="postgresql://user:password@localhost:5432/orbit_ai"
 
 # Better Auth
 BETTER_AUTH_SECRET="your-super-secret-key-min-32-chars"
-BETTER_AUTH_URL="http://localhost:3000"
+BETTER_AUTH_TOKEN="sdfghjklrtyui..."
 
 # Google Gemini AI
 GEMINI_API_KEY="your-gemini-api-key-here"
