@@ -39,7 +39,7 @@ export default function LORPreview({
     content: content,
     editorProps: {
       attributes: {
-        class: "prose prose-sm sm:prose lg:prose-lg xl:prose-xl focus:outline-none max-w-none p-4 min-h-[500px]",
+        class: "professional-letter-content focus:outline-none p-8 sm:p-12 min-h-[600px]",
       },
     },
     onUpdate: () => {
@@ -92,8 +92,7 @@ export default function LORPreview({
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between mb-4 gap-2">
-        <h3 className="text-lg font-semibold">Generated Letter</h3>
+      <div className="flex items-center justify-between mb-4 gap-2 flex-wrap">
         <div className="flex items-center gap-2">
           <Button
             onClick={handleCopy}
@@ -131,6 +130,8 @@ export default function LORPreview({
               </>
             )}
           </Button>
+        </div>
+        <div className="flex items-center gap-2">
           <Button onClick={onExportPDF} disabled={exporting} size="sm" variant="outline">
             {exporting ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -191,7 +192,7 @@ export default function LORPreview({
         </div>
       )}
 
-      <div className="flex-1 border rounded-lg overflow-auto bg-white">
+      <div className="flex-1 border rounded-lg overflow-auto bg-white shadow-sm">
         <EditorContent editor={editor} />
       </div>
     </div>
